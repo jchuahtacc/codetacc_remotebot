@@ -3,6 +3,8 @@ import random
 import pickle
 import bz2
 
+from .constants import REMOTEBOT_PORT
+
 class RobotMonitorProtocol(asyncio.DatagramProtocol):
     def __init__(self):
         super().__init__()
@@ -11,7 +13,7 @@ class RobotMonitorProtocol(asyncio.DatagramProtocol):
         message = pickle.loads(bz2.decompress(data))
         print("Receiving from " + addr[0] + ":", message)
 
-def monitor(bind='0.0.0.0', port=9999):
+def monitor(bind='0.0.0.0', port=REMOTEBOT_PORT):
     loop = asyncio.get_event_loop()
     print("Starting robot monitor")
     protocol = RobotMonitorProtocol()

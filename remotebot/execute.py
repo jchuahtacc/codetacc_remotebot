@@ -4,7 +4,7 @@ import asyncio
 import marshal
 import pickle
 
-from .variables import REMOTEBOT_PORT
+from .constants import REMOTEBOT_PORT
 
 def run_motor(motornum, speed, direction):
     pass

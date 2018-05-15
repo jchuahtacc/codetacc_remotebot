@@ -1,5 +1,5 @@
 from .execute import *
-from .variables import REMOTEBOT_PORT
+from .constants import REMOTEBOT_PORT
 
 from multiprocessing import Process
 import bz2
