@@ -41,7 +41,13 @@ async def handle_routine(reader, writer):
     current_process.start()
 
 def supervisor(bind="0.0.0.0", port=REMOTEBOT_PORT):
-    loop = asyncio.get_event_loop()
+    try:
+        loop
+    except NameError:
+        loop = asyncio.get_event_loop()
+    else:
+        if loop and loop.is_closed():
+            loop = asyncio.new_event_loop()
     coro = asyncio.start_server(handle_routine, bind, port, loop=loop)
     server = loop.run_until_complete(coro)
 

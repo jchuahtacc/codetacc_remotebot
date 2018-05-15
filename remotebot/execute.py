@@ -30,6 +30,12 @@ def send(routine, ip, port=REMOTEBOT_PORT, monitor_ip=None, monitor_port=REMOTEB
              "inference_ip" : inference_ip, "inference_port" : inference_port,
              "code" : routine.__code__ }
     data = bz2.compress(marshal.dumps(payload))
-    loop = asyncio.get_event_loop()
+    try:
+        loop
+    except NameError:
+        loop = asyncio.get_event_loop()
+    else:
+        if loop and loop.is_closed():
+            loop = asyncio.new_event_loop()
     loop.run_until_complete(tcp_send(data, ip, port, loop))
-    loop.close()
+    #loop.close()

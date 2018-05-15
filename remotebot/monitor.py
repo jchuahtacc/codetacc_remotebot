@@ -14,7 +14,13 @@ class RobotMonitorProtocol(asyncio.DatagramProtocol):
         print("Receiving from " + addr[0] + ":", message)
 
 def monitor(bind='0.0.0.0', port=REMOTEBOT_PORT):
-    loop = asyncio.get_event_loop()
+    try:
+        loop
+    except NameError:
+        loop = asyncio.get_event_loop()
+    else:
+        if loop and loop.is_closed():
+            loop = asyncio.new_event_loop()
     print("Starting robot monitor")
     protocol = RobotMonitorProtocol()
     coro = loop.create_datagram_endpoint(lambda: protocol, local_addr=(bind, port))
